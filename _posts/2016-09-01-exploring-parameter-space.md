@@ -5,7 +5,7 @@ title: Efficiently exploring high dimensional parameter space with Hybrid
 
 Often I have to explore some high dimensional parameter space, looking for the best position with respect to some likelihood function. This can be either minimising a chi-squared function or maximising a likelihood function. 
 
-In this blog I'd like to document one routine I've tweaked, which is useful if you don't know a priori where in your (potentially vast) parameter space a good fitting solution sits. Once you know a good starting point, then you might run a full MCMC chain in order to characterise the likelihood surface, so that you can quantify errors and degeneracies on your parameter values.
+In this blog I'd like to document one routine I've tweaked, which is useful if you don't know a-priori where in your (potentially vast) parameter space a good fitting solution sits. Once you know a good starting point, then you might run a full MCMC chain in order to characterise the likelihood surface, so that you can quantify errors and degeneracies on your parameter values.
 
 The routine is called  "Hybrid", and is based on this research paper http://arxiv.org/pdf/astro-ph/0602338v2.pdf and [my buddies' PhD thesis](https://github.com/hoyleb/hoyleb.github.io/blob/master/images/JK_PhD_Thesis_v3.pdf.bz2) 
 
@@ -15,3 +15,15 @@ I've made a couple of tweaks to this routine, so that the initial velocities of 
 
 Enough talk, let me show you what it can do, by means of a worked example.
 
+First we need to install some dependencies:
+```%>pip install pyDOE jobib emcee```
+
+```jobib``` allows easy parrelisation across many cores
+```emcee``` will be our defacto [and awesome] comparison routine
+```pyDOE``` gives us a latin-hypercube which is a great way to populate initial walkers in a high volume parameter space.
+
+Then add hybrid.py to you path
+
+![_config.yml]({{ site.baseurl }}/images/config.png)
+
+The easiest way to make your first post is to edit this one. Go into /_posts/ and update the Hello World markdown file. For more instructions head over to the [Jekyll Now repository](https://github.com/barryclark/jekyll-now) on GitHub.
