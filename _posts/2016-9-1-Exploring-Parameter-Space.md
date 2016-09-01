@@ -25,8 +25,10 @@ First we need to install some dependencies:
 ```pyDOE``` gives us a latin-hypercube which is a great way to populate initial walkers in a 
 high volume parameter space.
 
-Then add hybrid.py to you path
+Then add hybrid.py to your PYTHONPATH
 
 ![_config.yml]({{ site.baseurl }}/images/config.png)
 
 The easiest way to make your first post is to edit this one. Go into /_posts/ and update the Hello World markdown file. For more instructions head over to the [Jekyll Now repository](https://github.com/barryclark/jekyll-now) on GitHub.
+
+ ****
