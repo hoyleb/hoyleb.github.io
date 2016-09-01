@@ -16,11 +16,14 @@ I've made a couple of tweaks to this routine, so that the initial velocities of 
 Enough talk, let me show you what it can do, by means of a worked example.
 
 First we need to install some dependencies:
+
 ```%>pip install pyDOE jobib emcee```
 
-```jobib``` allows easy parrelisation across many cores
+
+```jobib``` allows easy parallelisation across many cores
 ```emcee``` will be our defacto [and awesome] comparison routine
-```pyDOE``` gives us a latin-hypercube which is a great way to populate initial walkers in a high volume parameter space.
+```pyDOE``` gives us a latin-hypercube which is a great way to populate initial walkers in a 
+high volume parameter space.
 
 Then add hybrid.py to you path
 
