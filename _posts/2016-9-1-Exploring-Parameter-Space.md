@@ -1,7 +1,7 @@
-------
+---
 layout: post
 title: Efficiently exploring high dimensional parameter space with Hybrid
-----
+---
 
 Often I have to explore some high dimensional parameter space, looking for the best position with respect to some likelihood function. This can be either minimising a chi-squared function or maximising a likelihood function. 
 
