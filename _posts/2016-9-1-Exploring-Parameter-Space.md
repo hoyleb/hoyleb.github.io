@@ -30,6 +30,7 @@ high volume parameter space.
 Now let me show you what it can do, by means of a worked example. We'll use the same example as [here, by the emcee team](http://dan.iel.fm/emcee/current/user/line/). Be sure to check that excellent tutorial out first, and then come back here.
 
 Right, let's modify the likelihood function ```lnprior``` a bit, so that we can "count" how many calls to the likelihood function we have had.
+
 ```
 count = 0 
 def lnlike(theta, x, y, yerr):
@@ -42,16 +43,19 @@ def lnlike(theta, x, y, yerr):
     return -0.5*(np.sum((y-model)**2*inv_sigma2 - np.log(inv_sigma2)))
 ```
 
-Next, let's re-run their optimise step and see how many calls to the likelihood function it takes:
+Next, let's re-run emcee's optimise step and see how many calls to the likelihood function it takes:
 
 ```
 import scipy.optimize as op
 nll = lambda *args: -lnlike(*args)
 count = 0
-result = op.minimize(nll, [m_true, b_true, np.log(f_true)], args=(x, y, yerr))
+result = op.minimize(nll, [m_true, b_true, np.log(f_true)], 
+                     args=(x, y, yerr))
 m_ml, b_ml, lnf_ml = result["x"]
 print ("number of calls optimise {:}".format(count))
 ```
+
+The result, is that give a very good guess to the starting position (some randomness means this may not be the globally best position) ```scipy.stat.minimise``` require ```60``` calls to the likelihood function to stabilise it's choice of parameter values.
 
 Now let's pretend we don't know the best starting positions. Let's choose a few random starting position from within the prior space. To do this, let's construct the parameter limits as an array, which we can get from the function ```lnprior```, namely
 
@@ -64,6 +68,7 @@ def lnprior(theta):
     return -np.inf
 ```
 So that the extracted prior range looks like this:
+
 ```
 #paramsMinMax = [[min(m), max(m)], [min(b), max(b)], [min(lnf), max(lnf)]]
 paramsMinMax = np.array([[-5.0 ,0.5], [0.0, 10.0], [-10.0, 1.0]])
@@ -76,7 +81,12 @@ from hybrid import Hybrid
 hy = Hybrid(lnprior, paramsMinMax, num_walkers=6)
 print ("Inital starting positions", hy.starting_positions)
 ```
-Under the hood we use the Latin-Hyper cube routine as a neat way to maximially explore the prior space, with the number of walkers we want to put down.
+
+Under the hood I've used the Latin-Hyper cube as a neat way to maximally explore the prior space, with the number of walkers we want to put down. For fun let's take each of these positions, and ask how many calls would it take ```scipy.stats.optimise``` to converge to a solution, and what would the value of the log-likelihood function be at those points:
+
+```
+
+```
 
 
 Rather than giving the final emcee call a good idea about the best initial starting positions, we are going to try and figure them out using ```hybrid```.
