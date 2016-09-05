@@ -29,9 +29,10 @@ high volume parameter space.
 
 Now let me show you what it can do, by means of a worked example. We'll use the same example as [here, by the emcee team](http://dan.iel.fm/emcee/current/user/line/). Be sure to check that excellent tutorial out first, and then come back here.
 
-Right, let's modify the likelihood function ```lnprior``` a bit, so that we can "count" how many calls to the likelihood function we have had.
+Right, let's modify the likelihood function ```lnprior``` a bit, so that we can "count" how many calls to the likelihood function we have had. We'll set a random seed so that all the results are reproducible:
 
 ```
+np.random.seed(0)
 count = 0 
 def lnlike(theta, x, y, yerr):
     #minor addition to count how many calls to likelihood function.
@@ -55,7 +56,7 @@ m_ml, b_ml, lnf_ml = result["x"]
 print ("number of calls optimise {:}".format(count))
 ```
 
-The result, is that give a very good guess to the starting position (some randomness means this may not be the globally best position) ```scipy.stat.minimise``` require ```60``` calls to the likelihood function to stabilise it's choice of parameter values.
+Given a very good guess to the correct starting position (some randomness means this may not be the globally best position) ```scipy.optimize``` require ```60``` calls to the likelihood function to stabilise it's choice of parameter values.
 
 Now let's pretend we don't know the best starting positions. Let's choose a few random starting position from within the prior space. To do this, let's construct the parameter limits as an array, which we can get from the function ```lnprior```, namely
 
@@ -82,7 +83,7 @@ hy = Hybrid(lnprior, paramsMinMax, num_walkers=6)
 print ("Inital starting positions", hy.starting_positions)
 ```
 
-Under the hood I've used the Latin-Hyper cube as a neat way to maximally explore the prior space, with the number of walkers we want to put down. For fun let's take each of these positions, and ask how many calls would it take ```scipy.stats.optimise``` to converge to a solution, and what would the value of the log-likelihood function be at those points:
+Under the hood I've used the Latin-Hyper cube as a neat way to maximally explore the prior space, with the number of walkers we want to put down. For fun let's take each of these positions, and ask how many calls would it take ```scipy.optimize``` to converge to a solution, and what would the value of the log-likelihood function be at those points:
 
 ```
 
